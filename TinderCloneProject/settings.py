@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
     'rest_framework',
     'apps.accounts.apps.AccountsConfig',
+    'apps.profiles.apps.ProfilesConfig',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -79,8 +81,12 @@ WSGI_APPLICATION = 'TinderCloneProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'PinderDB',        # Your database name
+        'USER': 'postgres',    # Your PostgreSQL username
+        'PASSWORD': 'db_pass25', # Your PostgreSQL password
+        'HOST': 'localhost',       # Or your DB host, e.g., 127.0.0.1 or a Docker service name
+        'PORT': '5432',            # Default PostgreSQL port
     }
 }
 
@@ -125,3 +131,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
