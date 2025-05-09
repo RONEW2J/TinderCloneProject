@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings # Use settings.AUTH_USER_MODEL
+from django.contrib.gis.db.models import PointField # Import PointField from GeoDjango
 # Alternatively, you can use:
 # from django.contrib.auth import get_user_model
 # User = get_user_model()
@@ -11,7 +12,7 @@ class Profile(models.Model):
         related_name='profile'
     )  # Расширение данных пользователя
     age = models.PositiveIntegerField(null=True, blank=True) # Consider if age can be optional initially
-    location = models.PointField(null=True, blank=True)  # GeoDjango - ensure PostGIS setup if using this
+    location = PointField(null=True, blank=True)  # GeoDjango - ensure PostGIS setup if using this
     interests = models.ManyToManyField('Interest', blank=True)
 
 class Interest(models.Model): # You'll need to define the Interest model
